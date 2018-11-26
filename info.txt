@@ -22,3 +22,28 @@ Depois, faremos um pequena alteração no build-prod, adicionando cross-env:
 Quem será responsável por setar a variável de ambiente será cross-env.
 
 +---
+
+Para trabalharmos em ambiente de desenvolvimento, quero usar um servidor que se integre com o Webpack, desta forma, não precisaremos criar um servidor próprio para tornar acessível nosso projeto.
+
+No caso, usaremos o Webpack dev server, utilizado por diversos frameworks, single pages applications, pelos Command line interfaces (CLI) dos projetos. Primeiramente, adequaremos o projeto para trabalhados com Webpack dev server. Vale lembrar que a pasta server deve continuar existindo, porque nela encontraremos as APIs consumidas pela aplicação, um protótipo de uma single page applications.
+
+No entanto, esta aplicação não vai tornar os arquivos estáticos acessíveis, como index.html e os arquivos com extensão JS.
+
+Vamos acessar o arquivo server.js, dentro da pasta server.
+
+Depois, entraremos em config/express.js, abaixo da variável express. Vamos comentar a linha referente ao clientPath, em que são compartilhados os arquivos estáticos.
+
+var express = require('express')
+    ,app = express()
+    ,routes = require('../app/routes')
+    ,path = require('path')
+    ,bodyParser = require('body-parser');
+
+/*
+app.set('clientPath', path.join(__dirname, '../..', 'client'));
+console.log(app.get('clientPath'));
+app.use(express.static(app.get('clientPath')));
+*/
+Agora, o back-end compartilhará a API para poder receber e enviar negociações, a pasta não será mais acessível no navegador. Se acessarmos o back-end, veremos que o servidor. Vamos pará-lo com pressionando "Ctrl + C + Enter" e em seguida, iremos reiniciá-lo com npm start. Se digitarmos localhost:3000 no navegador, nada será exibido. Esse era o nosso objetivo.
+
+Como nossa aplicação é uma single page application, trata-se de um protótipo feito em JavaScript, vai rodar no Weppack server e a API está em outro server, adequaremos os endereços das requisições feitas pela aplicação.
