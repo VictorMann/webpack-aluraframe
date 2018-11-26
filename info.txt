@@ -1,0 +1,24 @@
+O Uglify não suporta a sintaxe do ES2015, assim como as versões seguintes. O nosso projeto foi descrito em ES2017, ele certamente não será suportado. Com o Uglify, não conseguiremos minificar os arquivos escritos com o ES mais modernos.
+
+Nós iremos nos abdicar do Uglify, e consequentemente, do parâmetro -p. No caso, o comando de build-prod ficará igual ao de build-dev, mas vamos alterar isso mais adiante.
+
+Nós pediremos para o webpack usar outro módulo na realização desse processo de minificação e suporte a sintaxe do ES2015 (além de versões posteriores), os módulos. Usaremos o Babili, faremos a instalação no Terminal, com o seguinte comando:
+
+client caelum$ npm install babili-webpack-plugin@0.1.1 --save-dev
+
++---
+
+Para garantirmos que a mudança da variável de ambiente funcionará em qualquer plataforma, pediremos a ajuda de um módulo do NodeJS. No Terminal, acessaremos a pasta projeto webpack client, depois usaremos o comando npm install para o cross-env:
+
+client caelum$ npm install cross-env@5.0.1 --save-dev
+
+Depois, faremos um pequena alteração no build-prod, adicionando cross-env:
+
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "webpack --config webpack.config.js",
+    "build-prod": "cross-env NODE_ENV=production webpack  --config webpack.config.js"
+},
+Quem será responsável por setar a variável de ambiente será cross-env.
+
++---
